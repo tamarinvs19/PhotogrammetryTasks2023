@@ -28,7 +28,7 @@
 
 #define ORIENTATION_NHISTS           36   // число корзин при определении ориентации ключевой точки через гистограммы
 #define ORIENTATION_WINDOW_R         3    // минимальный радиус окна в рамках которого будет выбрана ориентиация (в пикселях), R=3 => 5x5 окно
-#define ORIENTATION_VOTES_PEAK_RATIO 0.999 // 0.8 => если гистограмма какого-то направления получила >= 80% от максимального чиссла голосов - она тоже победила
+#define ORIENTATION_VOTES_PEAK_RATIO 0.80 // 0.8 => если гистограмма какого-то направления получила >= 80% от максимального чиссла голосов - она тоже победила
 
 #define DESCRIPTOR_SIZE            4 // 4x4 гистограммы декскриптора
 #define DESCRIPTOR_NBINS           8 // 8 корзин-направлений в каждой гистограмме дескриптора (4х4 гистограммы, каждая по 8 корзин, итого 4x4x8=128 значений в дескрипторе)
@@ -398,7 +398,7 @@ bool phg::SIFT::buildDescriptor(const cv::Mat &img, float px, float py, double d
 
                             double orientation = atan2(dy, dx);
                             orientation = orientation * 180.0 / M_PI;
-                            orientation = (orientation + 90.0);
+                            orientation = (orientation + 90.0) - angle;
                             if (orientation <  0.0)   orientation += 360.0;
                             if (orientation >= 360.0) orientation -= 360.0;
 
