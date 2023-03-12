@@ -327,6 +327,8 @@ bool phg::SIFT::buildLocalOrientationHists(const cv::Mat &img, size_t i, size_t 
 
     for (size_t y = j - radius + 1; y < j + radius; ++y) {
         for (size_t x = i - radius + 1; x < i + radius; ++x) {
+            if (y - 1 < 0 || y + 1 >= img.cols || x - 1 < 0 || x + 1 >= img.rows)
+                return false;
             // m(x, y)=(L(x + 1, y) − L(x − 1, y))^2 + (L(x, y + 1) − L(x, y − 1))^2
             // double magnitude = TODO
             double lx = img.at<float>(x + 1, y) - img.at<float>(x - 1, y);
@@ -389,7 +391,7 @@ bool phg::SIFT::buildDescriptor(const cv::Mat &img, float px, float py, double d
                             int x = (int) (px + shift.x);
                             int y = (int) (py + shift.y);
 
-                            if (y - 1 < 0 || y + 1 > img.rows || x - 1 < 0 || x + 1 > img.cols)
+                            if (y - 1 < 0 || y + 1 >= img.cols || x - 1 < 0 || x + 1 >= img.rows)
                                 return false;
 
                             double dx = img.at<float>(x + 1, y) - img.at<float>(x - 1, y);
@@ -404,7 +406,7 @@ bool phg::SIFT::buildDescriptor(const cv::Mat &img, float px, float py, double d
 
                               // TODO за счет чего этот вклад будет сравниваться с этим же вкладом даже если эта картинка будет повернута? что нужно сделать с ориентацией каждого градиента из окрестности этой ключевой точки?
 
-//                            rassert(orientation >= 0.0 && orientation < 360.0, 3515215125412);
+                            rassert(orientation >= 0.0 && orientation < 360.0, 3515215125412);
                             static_assert(360 % DESCRIPTOR_NBINS == 0, "Inappropriate bins number!");
                             size_t bin = orientation * DESCRIPTOR_NBINS / 360.0;
                             rassert(bin < DESCRIPTOR_NBINS, 361236315613);
