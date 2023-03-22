@@ -33,7 +33,7 @@ find_package(OpenCV 4.5.1 REQUIRED)
 #     Windows: (но рекомендуется использовать Linux)
 # Скачайте этот скрипт и следуйте инструкции - https://gist.github.com/PolarNick239/18036d942ae4b9aad9f1da756ce6c845#file-buildocv-sh-L10-L33
 
-find_package(Eigen3 3.3 REQUIRED)
+find_package(Eigen3 3.4 REQUIRED)
 #      Linux:
 # sudo apt install libeigen3-dev
 #      Windows (чтобы удобно копировать в Git Bash консоль: выделите, нажмите Ctrl+C, в консоли нажмите Shift+Insert):
